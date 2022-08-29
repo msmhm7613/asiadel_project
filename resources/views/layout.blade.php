@@ -23,6 +23,7 @@
         <a class="navbar-brand" href="#">مزایده</a>
       </div>
       <ul class="nav navbar-nav">
+          <li><a href="{{ Route('user.offer_package') }}">بسته های پیشنهادی</a></li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">آگهی ها
           <span class="caret"></span></a>

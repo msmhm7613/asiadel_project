@@ -33,8 +33,17 @@ Route::get('create_order/{offer_id}','OrderController@form')->name('user.form.or
 
 //** Checkout Route */
 Route::post('bank','ShoppingController@create')->name('user.create.order');
+Route::get('bank','ShoppingController@create')->name('bank');
 Route::get('checkout/{ref_code}/{status}/{offer_id}/{order_id}','ShoppingController@checkout')->name('user.update.order');
 Route::get('send_product/{order_id}','ShoppingController@send_product')->name('user.create.order.get');
+
+//** Coupon Route */
+Route::get('coupons','OfferPackageController@all')->name('user.offer_package');
+Route::get('create_offer_pkg/{pkg_id}','UserOfferPkgController@create')->name('user.create.offerPkg');
+Route::get('delete_user_offer_pkg/{pkg_id}','UserOfferPkgController@delete')->name('user.delete.userOfferPkg');
+//** Cart Route */
+Route::get('cart','ShoppingController@cart')->name('user.cart');
+
 
 //** Login Route */
 Route::get('login',function(){
@@ -82,6 +91,14 @@ Route::group(['prefix' => 'admin','middleware' => ['admin_auth']], function () {
     Route::post('create_user','UserController@create')->name('admin.create.user');
     Route::get('users','UserController@users')->name('admin.users');
     Route::get('remove_user/{id}','UserController@remove')->name('admin.delete.user');
+    //** End Route */
+
+    //** Coupon Route */
+    Route::get('create_offer_pkg',function (){
+        return view('admin.create_offer_pkg');
+    })->name('admin.form.offer_pkg');
+    Route::post('create_offer_pkg','OfferPackageController@create')->name('admin.create.product');
+    Route::get('offer_packages','OfferPackageController@all')->name('admin.offer_pkg');
     //** End Route */
 
 });

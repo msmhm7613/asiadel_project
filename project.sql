@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 22, 2022 at 08:28 AM
+-- Generation Time: Aug 29, 2022 at 03:57 PM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -139,13 +139,21 @@ DROP TABLE IF EXISTS `offer_packages`;
 CREATE TABLE IF NOT EXISTS `offer_packages` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `body` text COLLATE utf8mb4_unicode_ci,
   `price` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `qui` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'number of offers',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `offer_packages`
+--
+
+INSERT INTO `offer_packages` (`id`, `title`, `body`, `price`, `qui`, `created_at`, `updated_at`) VALUES
+(1, 'بسته نقره ای', 'بسته ای شامل 20 پیشنهاد', '1000000', '20', '2022-08-27 13:18:44', '2022-08-27 13:18:44'),
+(2, 'بسته طلایی', 'بسته ای شامل 30 پیشنهاد', '3000000', '30', '2022-08-27 13:19:47', '2022-08-27 13:19:47');
 
 -- --------------------------------------------------------
 
@@ -256,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 --
 
 INSERT INTO `roles` (`id`, `title`, `access_id`, `created_at`, `updated_at`) VALUES
-(1, 'مدیر سایت', '[{\"access_id\": 7, \"access_route\": [\"admin.dashboard\"], \"access_title\": \"داشبورد\"}, {\"access_id\": 8, \"access_route\": [\"admin.roles\", \"admin.create.role\"], \"access_title\": \"مدیریت نقش ها\"}, {\"access_id\": \"1\", \"access_route\": [\"admin.products\", \"admin.delete.product\"], \"access_title\": \"مدیریت آگهی ها\"}, {\"access_id\": \"2\", \"access_route\": [\"admin.create.product\", \"admin.form.product\"], \"access_title\": \"ثبت آگهی جدید\"}, {\"access_id\": \"3\", \"access_route\": [\"\"], \"access_title\": \"مدیریت کوپن ها\"}, {\"access_id\": \"4\", \"access_route\": [\"\"], \"access_title\": \"ثبت کوپن جدید\"}, {\"access_id\": \"5\", \"access_route\": [\"admin.users\", \"admin.delete.user\"], \"access_title\": \"مدیریت کاربران\"}, {\"access_id\": \"6\", \"access_route\": [\"admin.form.user\", \"admin.create.user\"], \"access_title\": \"ثبت کاربران جدید\"}]', NULL, NULL),
+(1, 'مدیر سایت', '[{\"access_id\": 7, \"access_route\": [\"admin.dashboard\"], \"access_title\": \"داشبورد\"}, {\"access_id\": 8, \"access_route\": [\"admin.roles\", \"admin.create.role\"], \"access_title\": \"مدیریت نقش ها\"}, {\"access_id\": 4, \"access_route\": [\"admin.form.offer_pkg\", \"admin.create.offer_pkg\"], \"access_title\": \"ثبت کوپن جدید\"}, {\"access_id\": 3, \"access_route\": [\"admin.offer_pkg\", \"admin.delete.offer_pkg\"], \"access_title\": \"مدیریت کوپن ها\"}, {\"access_id\": \"1\", \"access_route\": [\"admin.products\", \"admin.delete.product\"], \"access_title\": \"مدیریت آگهی ها\"}, {\"access_id\": \"2\", \"access_route\": [\"admin.create.product\", \"admin.form.product\"], \"access_title\": \"ثبت آگهی جدید\"}, {\"access_id\": \"3\", \"access_route\": [\"\"], \"access_title\": \"مدیریت کوپن ها\"}, {\"access_id\": \"4\", \"access_route\": [\"\"], \"access_title\": \"ثبت کوپن جدید\"}, {\"access_id\": \"5\", \"access_route\": [\"admin.users\", \"admin.delete.user\"], \"access_title\": \"مدیریت کاربران\"}, {\"access_id\": \"6\", \"access_route\": [\"admin.form.user\", \"admin.create.user\"], \"access_title\": \"ثبت کاربران جدید\"}]', NULL, NULL),
 (2, 'کاربر عادی', '[{\"access_id\": 0, \"access_title\": \"کاربر عادی\"}]', NULL, NULL),
 (9, 'ناظر آگهی', '[{\"access_id\": 7, \"access_route\": [\"admin.dashboard\"], \"access_title\": \"داشبورد\"}, {\"access_id\": \"1\", \"access_route\": [\"admin.products\", \"admin.delete.product\"], \"access_title\": \"مدیریت آگهی ها\"}, {\"access_id\": \"2\", \"access_route\": [\"admin.create.product\", \"admin.form.product\"], \"access_title\": \"ثبت آگهی جدید\"}]', '2022-08-22 07:14:54', '2022-08-22 07:14:54');
 
@@ -300,22 +308,29 @@ INSERT INTO `users` (`id`, `fullname`, `email`, `password`, `cellphone`, `offer`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_offers`
+-- Table structure for table `user_offer_pkg`
 --
 
-DROP TABLE IF EXISTS `user_offers`;
-CREATE TABLE IF NOT EXISTS `user_offers` (
+DROP TABLE IF EXISTS `user_offer_pkg`;
+CREATE TABLE IF NOT EXISTS `user_offer_pkg` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `pkg_id` bigint(20) UNSIGNED NOT NULL,
   `pay_status` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '0 create 1 payed 2 fail_pay',
-  `trans_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0 not payed',
+  `trans_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '0 not payed',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_offers_user_id_foreign` (`user_id`),
-  KEY `user_offers_pkg_id_foreign` (`pkg_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `pkg_id` (`pkg_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_offer_pkg`
+--
+
+INSERT INTO `user_offer_pkg` (`id`, `user_id`, `pkg_id`, `pay_status`, `trans_id`, `created_at`, `updated_at`) VALUES
+(7, 8, 2, '0', '0', '2022-08-28 19:45:36', '2022-08-28 19:45:36');
 
 --
 -- Constraints for dumped tables
@@ -348,6 +363,13 @@ ALTER TABLE `products`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user_offer_pkg`
+--
+ALTER TABLE `user_offer_pkg`
+  ADD CONSTRAINT `user_offer_pkg_ibfk_1` FOREIGN KEY (`pkg_id`) REFERENCES `offer_packages` (`id`),
+  ADD CONSTRAINT `user_offer_pkg_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

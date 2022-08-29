@@ -13,7 +13,7 @@ class CreateUserOffersTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_offers', function (Blueprint $table) {
+        Schema::create('user_offer_pkg', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('pkg_id');

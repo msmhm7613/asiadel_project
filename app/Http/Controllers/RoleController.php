@@ -44,8 +44,8 @@ class RoleController extends Controller
 
         $test = array([1 => ['admin.products','admin.delete.product'],
             2 => ['admin.create.product','admin.form.product'],
-            3 => [''],
-            4 => [''],
+            3 => ['admin.offer_pkg','admin.delete.offer_pkg'],
+            4 => ['admin.form.offer_pkg','admin.create.offer_pkg'],
             5 => ['admin.users','admin.delete.user'],
             6 => ['admin.form.user','admin.create.user']]);
 

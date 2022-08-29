@@ -45,10 +45,10 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         @if(in_array(3,session('access_id')))
-                            <li><a href="#">مدیریت کوپن ها</a></li>
+                            <li><a href="{{ Route('admin.offer_pkg') }}">مدیریت کوپن ها</a></li>
                         @endif
                         @if(in_array(4,session('access_id')))
-                            <li><a href="#">ثبت کوپن جدید</a></li>
+                            <li><a href="{{ Route('admin.form.offer_pkg') }}">ثبت کوپن جدید</a></li>
                         @endif
                     </ul>
                 </li>
